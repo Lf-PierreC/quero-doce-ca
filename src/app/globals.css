@@ -1,26 +1,156 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --creme-fundo: #fcfaf8;
+  --admin-fundo: #f9f6f6; /* Altere aqui para mudar a cor de fundo APENAS do Painel Admin */
+  --creme-puro: #FFFDFB;
+  --cacau: #3E2418;
+  --cacau-suave: #75584B;
+  --dourado: #B88B4A;
+  --rosa-blush: #F4E6E2;
+  --rosa-antico: #D5A8A0;
+  --borda-fina: #EBDAD3;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-creme: var(--creme-fundo);
+  --color-cacau: var(--cacau);
+  --color-dourado: var(--dourado);
+  --color-rosa-nude: var(--rosa-blush);
+  --font-serif: var(--font-cormorant);
+  --font-sans: var(--font-montserrat);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--creme-fundo);
+  color: var(--cacau);
+  font-family: var(--font-montserrat), sans-serif;
+  line-height: 1.6;
+  text-align: start;
+  min-height: 100vh;
 }
+
+/* Editorial typography & balanced headings (modern-web-guidance: typography & improve-text-layout-and-legibility) */
+h1, h2, h3, h4, .font-serif-title {
+  font-family: var(--font-cormorant), serif;
+  text-wrap: balance;
+}
+
+p, blockquote, li {
+  text-wrap: pretty;
+}
+
+/* Native dialog modal scroll containment (modern-web-guidance: dialog) */
+dialog:modal {
+  overscroll-behavior: contain;
+}
+dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
+  background: rgba(72, 68, 68, 0.42);
+  backdrop-filter: blur(6px);
+}
+
+/* Accessible & modern form controls (modern-web-guidance: forms) */
+:where(input, select, textarea) {
+  font: inherit;
+  font-size: max(1rem, 1em);
+  accent-color: var(--cacau);
+}
+
+input:user-invalid, select:user-invalid, textarea:user-invalid {
+  border-color: #b91c1c;
+  background-color: #fef2f2;
+}
+
+input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-visible, a:focus-visible {
+  outline: 2px solid var(--rosa-antico);
+  outline-offset: 2px;
+}
+
+/* Responsive table wrapper (modern-web-guidance: responsive-table) */
+.table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-inline-size: 100%;
+  container-type: inline-size;
+}
+
+.table-wrapper table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+}
+
+.table-wrapper thead {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 1;
+}
+
+@media (min-width: 768px) {
+  .table-wrapper tbody th {
+    position: sticky;
+    inset-inline-start: 0;
+    background: var(--creme-puro);
+    z-index: 1;
+  }
+}
+
+/* Accessible tabs indicator (modern-web-guidance: tabs) */
+[role="tab"], [focusgroup*="tablist"] > button {
+  position: relative;
+}
+
+[aria-selected="true"]::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  border-block-end: 2px solid var(--cacau);
+}
+
+/* Customização elegante da barra de rolagem (modern-web-guidance: customize-scrollbar-color-and-thickness) */
+@media (forced-colors: none) {
+  .custom-scrollbar,
+  html {
+    --scrollbar-thumb: #8C6A5B;
+    --scrollbar-track: #FAF6F2;
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+  }
+
+  @supports not (scrollbar-color: auto) {
+    .custom-scrollbar,
+    html {
+      scrollbar-width: auto;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar,
+    html::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track,
+    html::-webkit-scrollbar-track {
+      background: var(--scrollbar-track);
+      border-radius: 9999px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb,
+    html::-webkit-scrollbar-thumb {
+      background: var(--scrollbar-thumb);
+      border-radius: 9999px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover,
+    html::-webkit-scrollbar-thumb:hover {
+      background: #3E2418;
+    }
+  }
+}
+
